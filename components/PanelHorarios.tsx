@@ -1,4 +1,4 @@
-﻿import { LAB, minutos } from "@/lib/laboratorio";
+import { LAB, minutos } from "@/lib/laboratorio";
 
 export default function PanelHorarios() {
   const inicio = minutos(LAB.atencion.desde);
@@ -9,7 +9,7 @@ export default function PanelHorarios() {
   return (
     <aside aria-label="Horarios" className="flex min-w-0 flex-col gap-4 rounded-[18px] border border-lab-line bg-lab-surface p-5">
       <h2 className="font-lab-display text-[15px] leading-[1.12] font-bold tracking-[.02em] text-lab-muted uppercase">Horarios del laboratorio</h2>
-      <div className="grid grid-cols-1 gap-3 min-[480px]:grid-cols-2 min-[720px]:grid-cols-1 min-[1000px]:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 min-[640px]:grid-cols-2">
         {[{ ...LAB.toma, titulo: "Toma y recepción de muestras", clave: true }, { ...LAB.atencion, titulo: "Atención del laboratorio", clave: false }].map((horario) => (
           <div key={horario.titulo} className="flex min-w-0 flex-col gap-1">
             <small className="text-[13px] leading-[1.3] text-lab-muted">{horario.titulo}</small>

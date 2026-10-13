@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
@@ -47,8 +47,8 @@ export default function PaginaPrincipal() {
   const telefonoHref = `tel:${LAB.telefono.replace(/[^\d+]/g, "")}`;
 
   return (
-    <div className="lab-theme min-h-screen bg-lab-bg px-4 pb-8 text-lab-fg min-[720px]:px-6">
-      <div className="mx-auto flex max-w-[1080px] flex-col gap-7">
+    <div className="lab-theme min-h-screen w-full bg-lab-bg pb-8 text-lab-fg">
+      <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-7 px-[clamp(16px,4vw,56px)]">
         <header className="flex flex-wrap items-center justify-between gap-3 border-b border-lab-line py-4">
           <div className="flex min-w-0 items-center gap-3">
             <div className="shrink-0 rounded-xl bg-white p-2">
@@ -63,7 +63,7 @@ export default function PaginaPrincipal() {
         </header>
 
         <main className="flex flex-col gap-7">
-          <section aria-labelledby="titulo" className="grid grid-cols-1 gap-5 min-[720px]:grid-cols-[1.1fr_1fr] min-[720px]:gap-8">
+          <section aria-labelledby="titulo" className="grid grid-cols-1 gap-5 min-[1024px]:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] min-[1024px]:gap-8">
             <div className="flex min-w-0 flex-col justify-center gap-3">
               <p className="text-xs font-semibold tracking-[.12em] text-lab-brand uppercase">Información para pacientes</p>
               <h1 id="titulo" className="font-lab-display text-[clamp(30px,7vw,48px)] leading-[1.12] font-extrabold tracking-[-.015em] text-balance">Indicaciones antes de tus pruebas de laboratorio</h1>
@@ -80,7 +80,7 @@ export default function PaginaPrincipal() {
           <section aria-label="Áreas y pruebas" aria-live="polite" aria-busy={cargando}>
             {cargando ? <>
               <p className="sr-only">Cargando pruebas…</p>
-              <div aria-hidden="true" className="grid grid-cols-1 gap-3.5 min-[720px]:grid-cols-2 min-[1000px]:grid-cols-4">
+              <div aria-hidden="true" className="grid grid-cols-1 gap-3.5 min-[640px]:grid-cols-2 min-[1280px]:grid-cols-4">
                 {Array.from({ length: 4 }, (_, index) => <div key={index} className="flex min-h-[240px] animate-pulse flex-col gap-5 rounded-[18px] border border-lab-line border-t-[5px] bg-lab-surface p-[18px] motion-reduce:animate-none">
                   <div className="h-[46px] rounded-xl bg-lab-track" /><div className="h-5 w-3/4 rounded bg-lab-track" /><div className="h-5 rounded bg-lab-track" /><div className="mt-auto h-10 rounded-xl bg-lab-track" />
                 </div>)}
@@ -96,8 +96,8 @@ export default function PaginaPrincipal() {
 
           <section aria-labelledby="indicaciones-generales">
             <h2 id="indicaciones-generales" className="mb-3.5 font-lab-display text-[clamp(22px,5vw,30px)] leading-[1.12] font-extrabold text-balance">Indicaciones generales</h2>
-            <div className="grid grid-cols-1 gap-3 min-[720px]:grid-cols-3">
-              {INDICACIONES.map((indicacion) => <article key={indicacion.titulo} className="flex min-w-0 items-start gap-3.5 rounded-2xl border border-lab-line bg-lab-surface p-4 min-[720px]:flex-col">
+            <div className="grid grid-cols-1 gap-3 min-[1024px]:grid-cols-3">
+              {INDICACIONES.map((indicacion) => <article key={indicacion.titulo} className="flex min-w-0 items-start gap-3.5 rounded-2xl border border-lab-line bg-lab-surface p-4 min-[1024px]:flex-col">
                 <div className="min-w-[54px] shrink-0 rounded-[10px] bg-lab-brand px-[9px] py-1.5 text-center font-lab-mono text-[15px] leading-[1.2] font-semibold text-lab-brand-ink">{indicacion.marca}</div>
                 <div className="min-w-0">
                   <h3 className="mb-0.5 font-lab-display text-[17px] leading-[1.12] font-bold">{indicacion.titulo}</h3>
@@ -108,7 +108,7 @@ export default function PaginaPrincipal() {
           </section>
         </main>
 
-        <footer className="grid grid-cols-1 gap-3.5 border-t border-lab-line pt-5 text-[15px] min-[720px]:grid-cols-[1.4fr_1fr_1fr]">
+        <footer className="grid grid-cols-1 gap-3.5 border-t border-lab-line pt-5 text-[15px] min-[1024px]:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)]">
           <div><b className="mb-0.5 block text-xs font-semibold tracking-[.1em] text-lab-muted uppercase">Dirección</b>{LAB.direccion}</div>
           <div><b className="mb-0.5 block text-xs font-semibold tracking-[.1em] text-lab-muted uppercase">Citas</b><a href={telefonoHref} className="rounded font-lab-mono font-medium">{LAB.telefono}</a></div>
           <div><b className="mb-0.5 block text-xs font-semibold tracking-[.1em] text-lab-muted uppercase">Horario</b>Toma de muestras<br /><span className="font-lab-mono font-medium">{LAB.toma.etiqueta}</span></div>

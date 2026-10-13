@@ -1,28 +1,30 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+  --bg: #f1f6fb;
+  --surface: #ffffff;
+  --fg: #12233a;
+  --muted: #55657b;
+  --line: #d6e2ee;
+  --brand: #0f4c81;
+  --brand-ink: #ffffff;
+  --track: #dbe6f1;
+  --background: var(--bg);
+  --foreground: var(--fg);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-lab-body-source);
+  --font-mono: var(--font-lab-mono-source);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-lab-body-source), "Segoe UI", system-ui, sans-serif;
 }
 
 /* ===== NUESTROS ESTILOS PERSONALIZADOS ===== */
@@ -46,19 +48,19 @@ body {
   @apply text-gray-600;
 }
 
-/* Tema exclusivo de la pantalla principal; el detalle conserva sus estilos. */
+/* Paleta clara independiente del tema del sistema. */
 .lab-theme {
   background: var(--lab-bg);
   color: var(--lab-fg);
-  --lab-bg: #f1f6fb;
-  --lab-surface: #ffffff;
-  --lab-fg: #12233a;
-  --lab-muted: #55657b;
-  --lab-line: #d6e2ee;
-  --lab-brand: #0f4c81;
-  --lab-brand-ink: #ffffff;
-  --lab-track: #dbe6f1;
-  --lab-hl: #0f4c81;
+  --lab-bg: var(--bg);
+  --lab-surface: var(--surface);
+  --lab-fg: var(--fg);
+  --lab-muted: var(--muted);
+  --lab-line: var(--line);
+  --lab-brand: var(--brand);
+  --lab-brand-ink: var(--brand-ink);
+  --lab-track: var(--track);
+  --lab-hl: var(--brand);
   --lab-a1: #1d5fb8; --lab-a1-soft: #e2edfb;
   --lab-a2: #0b7f80; --lab-a2-soft: #dcf3f1;
   --lab-a3: #b8283b; --lab-a3-soft: #fbe3e7;
@@ -67,20 +69,6 @@ body {
   font-size: 16px;
   line-height: 1.5;
   color-scheme: light;
-}
-
-@media (prefers-color-scheme: dark) {
-  .lab-theme {
-    --lab-bg: #0b1520; --lab-surface: #132033; --lab-fg: #e7eef7;
-    --lab-muted: #9bb0c7; --lab-line: #243750;
-    --lab-brand: #6fb4f3; --lab-brand-ink: #0b1520;
-    --lab-track: #223650; --lab-hl: #6fb4f3;
-    --lab-a1: #86b9f6; --lab-a1-soft: #172c48;
-    --lab-a2: #63d2cd; --lab-a2-soft: #123a3c;
-    --lab-a3: #f293a0; --lab-a3-soft: #402029;
-    --lab-a4: #95d78b; --lab-a4-soft: #213c1f;
-    color-scheme: dark;
-  }
 }
 
 @theme inline {
@@ -107,12 +95,18 @@ body {
   outline-offset: 2px;
 }
 
-.lab-theme .font-lab-display {
+h1, h2, h3, .lab-theme .font-lab-display {
   font-family: var(--font-lab-display-source), "Segoe UI", system-ui, sans-serif;
 }
 .lab-theme .font-lab-mono {
   font-family: var(--font-lab-mono-source), ui-monospace, Menlo, monospace;
 }
+.lab-theme article, .lab-theme aside, .lab-theme input[type="search"] {
+  box-shadow: 0 3px 14px rgba(18, 35, 58, .045);
+}
+.lab-theme button, .lab-theme a, .lab-theme input { min-height: 44px; }
+.lab-theme a { display: inline-flex; align-items: center; }
+.lab-theme button[aria-label="Cerrar ventana"] { min-width: 44px; }
 .lab-theme .lab-test-name {
   transform-origin: left center;
   transition: transform 180ms ease;

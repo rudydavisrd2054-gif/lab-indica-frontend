@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
@@ -32,7 +32,7 @@ export default function ListaPruebas({ pruebas, consulta }: { pruebas: Prueba[];
   const ayuno = registro?.tiempo_ayunas?.trim();
 
   return <>
-    {visibles.length ? <div className="grid grid-cols-1 gap-3.5 min-[720px]:grid-cols-2 min-[1000px]:grid-cols-4">
+    {visibles.length ? <div className="grid grid-cols-1 gap-3.5 min-[640px]:grid-cols-2 min-[1280px]:grid-cols-4">
       {visibles.map((area) => {
         const Icono = ICONOS[area.id as keyof typeof ICONOS];
         return <article key={area.id} data-area={area.color} className="flex min-w-0 flex-col gap-3.5 rounded-[18px] border border-lab-line border-t-[5px] border-t-[var(--area-color)] bg-lab-surface p-[18px]">
