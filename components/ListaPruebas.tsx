@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { ChevronRight, Droplet, FlaskConical, ListFilter, Microscope, ShieldCheck, X } from "lucide-react";
+import { ChevronDown, ChevronRight, Info, TestTube, Droplet, FlaskConical, ListFilter, Microscope, ShieldCheck, X } from "lucide-react";
 import { construirAreas, filtrarAreas, type AreaCatalogo, type PruebaCatalogo } from "@/lib/laboratorio";
 import type { Prueba } from "@/types/prueba";
 
@@ -76,21 +76,29 @@ export default function ListaPruebas({ pruebas, consulta }: { pruebas: Prueba[];
           </div>
           <button type="button" onClick={cerrar} aria-label="Cerrar ventana" className="grid size-10 shrink-0 cursor-pointer place-items-center rounded-xl bg-[var(--area-soft)] text-[var(--area-color)]"><X size={20} strokeWidth={2.2} /></button>
         </div>
-        <div className="flex min-h-0 flex-col gap-3 overflow-y-auto overscroll-contain px-5 pt-1 pb-4 [overflow-wrap:anywhere]">
-          {registro ? <>
-            {ayuno && <div className="rounded-[14px] bg-[var(--area-soft)] px-4 py-3.5">
-              <h3 className="mb-1 text-[13px] font-bold tracking-[.08em] text-[var(--area-color)] uppercase">Tiempo de ayuno</h3>
-              <p className="font-lab-mono text-xl font-semibold whitespace-pre-line">{registro.tiempo_ayunas}</p>
-            </div>}
-            <div className="rounded-[14px] bg-[var(--area-soft)] px-4 py-3.5">
-              <h3 className="mb-1 text-[13px] font-bold tracking-[.08em] text-[var(--area-color)] uppercase">Indicaciones preanalíticas</h3>
-              <p className="text-[17px] whitespace-pre-line">{registro.indicaciones.trim() ? registro.indicaciones : "Aún no hay indicaciones registradas."}</p>
-            </div>
-            <Link href={`/prueba/${registro.id}`} className="self-start rounded-md font-semibold text-[var(--area-color)] underline underline-offset-4">Ver página de esta prueba</Link>
-          </> : <div className="rounded-[14px] border border-dashed border-lab-line bg-lab-bg px-4 py-3.5">
-            <h3 className="mb-1 text-[13px] font-bold tracking-[.08em] text-[var(--area-color)] uppercase">Indicaciones preanalíticas</h3>
-            <p className="text-base text-lab-muted">Las indicaciones de esta prueba aún no están registradas. Consulta en el laboratorio antes de tu toma.</p>
-          </div>}
+        <div className="flex min-h-0 flex-col gap-4 overflow-y-auto overscroll-contain px-5 pt-2 pb-5 [overflow-wrap:anywhere]">
+          <div key={seleccion?.item.clave} className="flex flex-col gap-3">
+            {[
+              { titulo: "¿Qué es?", icono: Info, contenido: "La descripción de esta prueba estará disponible próximamente." },
+              { titulo: "Preparación para el examen", icono: Info, contenido: registro?.indicaciones?.trim() || "Las indicaciones de preparación aún no están registradas. Consulta en el laboratorio antes de tu toma." },
+              { titulo: "Tipo de muestra", icono: TestTube, contenido: "El tipo de muestra aún no está registrado." },
+              { titulo: "¿Cómo interpretar los resultados?", icono: Info, contenido: "La información de interpretación aún no está registrada. Consulta tus resultados con el profesional que solicitó la prueba." },
+            ].map((seccion, indice) => {
+              const Icono = seccion.icono;
+              return <details key={seccion.titulo} name="detalle-prueba" open={indice === 0} className="group rounded-2xl border border-lab-line bg-lab-surface">
+                <summary className="flex min-h-14 cursor-pointer list-none items-center gap-2.5 rounded-2xl px-4 py-3.5 text-[15px] font-semibold [&::-webkit-details-marker]:hidden">
+                  <Icono aria-hidden="true" size={19} className="shrink-0 text-[var(--area-color)]" />
+                  <span className="min-w-0 flex-1">{seccion.titulo}</span>
+                  <ChevronDown aria-hidden="true" size={17} className="shrink-0 text-lab-muted group-open:rotate-180" />
+                </summary>
+                <div className="space-y-3 px-4 pt-1 pb-5 text-[15px] leading-7 text-lab-muted">
+                  {indice === 1 && ayuno && <p className="inline-block rounded-lg bg-[var(--area-soft)] px-3 py-1 font-medium text-[var(--area-color)]">Ayuno: {ayuno}</p>}
+                  <p className="whitespace-pre-line">{seccion.contenido}</p>
+                </div>
+              </details>;
+            })}
+          </div>
+          {registro && <Link href={`/prueba/${registro.id}`} className="self-start rounded-md text-sm font-semibold text-[var(--area-color)] underline underline-offset-4">Ver página de esta prueba</Link>}
         </div>
         <div className="flex shrink-0 justify-end border-t border-lab-line px-5 pt-3 pb-5">
           <button type="button" onClick={cerrar} className="cursor-pointer rounded-xl bg-lab-brand px-[22px] py-[11px] text-[15px] font-semibold text-lab-brand-ink">Cerrar</button>
