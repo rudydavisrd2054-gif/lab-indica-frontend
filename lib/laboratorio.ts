@@ -63,7 +63,7 @@ export const AREAS: readonly {
     { nombre: "VSG", detalle: "Velocidad de sedimentación globular", palabras: ["vsg", "velocidad de sedimentacion"] },
     { nombre: "Hemoglobina glicosilada", detalle: "HbA1c", palabras: ["hemoglobina glicosilada", "hemoglobina glicada", "hba1c"] },
   ] },
-  { id: "microbiologia", nombre: "Microbiología y otros", color: "4", items: [
+  { id: "microbiologia", nombre: "Microbiología", color: "4", items: [
     { nombre: "Orina completa", palabras: ["orina completa", "examen general de orina", "examen de orina"] },
     { nombre: "Parásitos", detalle: "Coproparasitológico: 1, 2 y 3 muestras", palabras: ["parasito", "parasitos", "parasitologico", "coproparasitologico"] },
     { nombre: "Test de Graham", detalle: "Investigación de oxiuros", palabras: ["graham"] },
@@ -85,10 +85,14 @@ export function construirAreas(pruebas: Prueba[]): AreaCatalogo[] {
     })),
   }));
   const otras: PruebaCatalogo[] = [];
+  const nombresVisibles = new Set<string>();
   for (const [indice, prueba] of pruebas.entries()) {
     const nombre = normalizar(prueba.nombre);
+    if (nombresVisibles.has(nombre)) continue;
+    nombresVisibles.add(nombre);
     let mejor: { area: number; item: number; longitud: number } | undefined;
     AREAS.forEach((area, indiceArea) => area.items.forEach((item, indiceItem) => {
+      if (prueba.area && prueba.area !== area.id) return;
       for (const palabra of item.palabras) {
         const longitud = normalizar(palabra).length;
         if (coincide(nombre, palabra) && (!mejor || longitud > mejor.longitud)) {
@@ -98,13 +102,19 @@ export function construirAreas(pruebas: Prueba[]): AreaCatalogo[] {
     }));
     const destino = mejor ? areas[mejor.area].items[mejor.item] : undefined;
     if (destino && !destino.prueba) destino.prueba = prueba;
-    else otras.push({ clave: `api-${prueba.id}-${indice}`, nombre: prueba.nombre, prueba });
+    else {
+      const item = { clave: `api-${prueba.id}-${indice}`, nombre: prueba.nombre, prueba };
+      const areaAsignada = areas.find((area) => area.id === prueba.area);
+      if (areaAsignada) areaAsignada.items.push(item);
+      else otras.push(item);
+    }
   }
   if (otras.length) {
     areas.push({ id: "otras", nombre: "Otras pruebas", color: "5", items: otras });
     if (process.env.NODE_ENV !== "production") console.warn("Pruebas sin catálogo (Otras pruebas):", otras.map((item) => item.nombre));
   }
-  return areas;
+  return areas.map((area) => ({ ...area, items: area.items.filter((item) => item.prueba) }))
+    .filter((area) => area.items.length > 0);
 }
 
 export function filtrarAreas(areas: AreaCatalogo[], consulta: string): AreaCatalogo[] {

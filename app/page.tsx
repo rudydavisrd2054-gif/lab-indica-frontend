@@ -18,19 +18,29 @@ export default function PaginaPrincipal() {
 
   useEffect(() => {
     const controller = new AbortController();
-    getPruebas(controller.signal)
-      .then((datos) => {
+    async function actualizar() {
+      try {
+        const datos = await getPruebas(controller.signal);
         if (controller.signal.aborted) return;
         setPruebas(datos);
-        setCargando(false);
-      })
-      .catch((err: unknown) => {
-        if (controller.signal.aborted) return;
-        console.error("No se pudieron cargar las pruebas:", err);
-        setError(true);
-        setCargando(false);
-      });
-    return () => controller.abort();
+        setError(false);
+      } catch {
+        if (!controller.signal.aborted) setError(true);
+      } finally {
+        if (!controller.signal.aborted) setCargando(false);
+      }
+    }
+    void actualizar();
+    const intervalo = window.setInterval(() => void actualizar(), 30000);
+    const alVolver = () => { if (document.visibilityState === "visible") void actualizar(); };
+    document.addEventListener("visibilitychange", alVolver);
+    window.addEventListener("focus", alVolver);
+    return () => {
+      controller.abort();
+      window.clearInterval(intervalo);
+      document.removeEventListener("visibilitychange", alVolver);
+      window.removeEventListener("focus", alVolver);
+    };
   }, [intento]);
 
   function reintentar() {

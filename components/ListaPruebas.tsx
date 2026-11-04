@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import EstadoPrueba from "@/components/EstadoPrueba";
 import { ChevronDown, ChevronRight, Info, TestTube, Droplet, FlaskConical, ListFilter, Microscope, ShieldCheck, X } from "lucide-react";
 import { construirAreas, filtrarAreas, type AreaCatalogo, type PruebaCatalogo } from "@/lib/laboratorio";
 import type { Prueba } from "@/types/prueba";
@@ -21,14 +22,18 @@ export default function ListaPruebas({ pruebas, consulta }: { pruebas: Prueba[];
 
   useEffect(() => {
     const ventana = dialogo.current;
+    if (seleccion && !pruebas.some((prueba) => prueba.id === seleccion.item.prueba?.id)) {
+      ventana?.close();
+      return;
+    }
     if (seleccion && ventana && !ventana.open) ventana.showModal();
-  }, [seleccion]);
+  }, [seleccion, pruebas]);
 
   function cerrar() {
     dialogo.current?.close();
   }
 
-  const registro = seleccion?.item.prueba;
+  const registro = pruebas.find((prueba) => prueba.id === seleccion?.item.prueba?.id);
   const ayuno = registro?.tiempo_ayunas?.trim();
 
   return <>
@@ -49,6 +54,7 @@ export default function ListaPruebas({ pruebas, consulta }: { pruebas: Prueba[];
                 <span aria-hidden="true" className="size-2 shrink-0 rounded-full bg-[var(--area-color)]" />
                 <span className="lab-test-name min-w-0 flex-1 [overflow-wrap:anywhere]">
                   {item.nombre}
+                  <EstadoPrueba prueba={item.prueba} />
                   {item.detalle && <small className="block text-[13px] font-normal text-lab-muted">{item.detalle}</small>}
                   {item.prueba?.tiempo_ayunas?.trim() && <small className="block font-lab-mono text-xs font-medium text-[var(--area-color)]">Ayuno: {item.prueba.tiempo_ayunas}</small>}
                 </span>
@@ -71,6 +77,7 @@ export default function ListaPruebas({ pruebas, consulta }: { pruebas: Prueba[];
         <div className="flex shrink-0 items-start justify-between gap-3 px-5 pt-5 pb-3">
           <div className="min-w-0 [overflow-wrap:anywhere]">
             <p className="mb-1 text-xs font-semibold tracking-[.1em] text-[var(--area-color)] uppercase">{seleccion?.area.nombre}</p>
+            <EstadoPrueba prueba={registro} />
             <h2 id="titulo-prueba" className="font-lab-display text-[clamp(22px,5vw,28px)] leading-[1.12] font-extrabold">{seleccion?.item.nombre ?? "Indicaciones de la prueba"}</h2>
             {seleccion?.item.detalle && <p className="mt-0.5 text-[15px] text-lab-muted">{seleccion.item.detalle}</p>}
           </div>

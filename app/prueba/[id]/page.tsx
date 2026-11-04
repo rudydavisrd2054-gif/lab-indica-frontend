@@ -2,12 +2,9 @@
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 
-interface Prueba {
-  id: number;
-  nombre: string;
-  indicaciones: string;
-  tiempo_ayunas: string | null;
-}
+import type { Prueba } from "@/types/prueba";
+import EstadoPrueba from "@/components/EstadoPrueba";
+import { API_URL } from "@/lib/api";
 
 export default function PruebaDetalle() {
   const params = useParams();
@@ -17,16 +14,27 @@ export default function PruebaDetalle() {
 
   useEffect(() => {
     if (!id) return;
-    fetch(`http://localhost:5000/api/pruebas/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setPrueba(data);
-        setCargando(false);
-      })
-      .catch((err) => {
-        console.error("Error:", err);
-        setCargando(false);
-      });
+    const controller = new AbortController();
+    async function actualizar() {
+      try {
+        const response = await fetch(`${API_URL.replace(/\/$/, "")}/api/pruebas/${id}`, { signal: controller.signal, cache: "no-store" });
+        if (!response.ok) throw new Error("Prueba no disponible");
+        const data: Prueba = await response.json();
+        if (!controller.signal.aborted) setPrueba(data);
+      } catch {
+        if (!controller.signal.aborted) setPrueba(null);
+      } finally {
+        if (!controller.signal.aborted) setCargando(false);
+      }
+    }
+    void actualizar();
+    const interval = window.setInterval(() => void actualizar(), 30000);
+    window.addEventListener("focus", actualizar);
+    return () => {
+      controller.abort();
+      window.clearInterval(interval);
+      window.removeEventListener("focus", actualizar);
+    };
   }, [id]);
 
   if (cargando) return <div className="p-6 text-center">Cargando...</div>;
@@ -42,6 +50,8 @@ export default function PruebaDetalle() {
         <h1 className="text-2xl font-bold text-sky-800 mb-4">
           {prueba.nombre}
         </h1>
+
+        <div className="mb-4"><EstadoPrueba prueba={prueba} /></div>
 
         <div className="bg-amber-50 border-l-4 border-amber-500 p-4 mb-6 rounded-r">
           <p className="font-semibold text-amber-800">⏱️ Tiempo de ayuno:</p>

@@ -4,7 +4,7 @@ export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000
 
 export async function getPruebas(signal?: AbortSignal): Promise<Prueba[]> {
   try {
-    const res = await fetch(`${API_URL.replace(/\/$/, "")}/api/pruebas`, { signal });
+    const res = await fetch(`${API_URL.replace(/\/$/, "")}/api/pruebas`, { signal, cache: "no-store" });
     if (!res.ok) throw new Error(`No se pudieron obtener las pruebas (HTTP ${res.status}).`);
     const data: unknown = await res.json();
     if (!Array.isArray(data)) throw new Error("La respuesta de pruebas debe ser un arreglo.");
