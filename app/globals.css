@@ -117,8 +117,45 @@ h1, h2, h3, .lab-theme .font-lab-display {
 }
 .lab-theme .lab-test:focus-visible { background: var(--area-soft); }
 .lab-theme .lab-test:focus-visible .lab-test-name { transform: scale(1.08); }
+.lab-theme .lab-dialog {
+  position: fixed;
+  inset: 50% auto auto 50%;
+  translate: -50% -50%;
+  margin: 0;
+  box-sizing: border-box;
+  width: min(600px, calc(100vw - 32px));
+  height: min(760px, calc(100dvh - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+}
+.lab-theme .lab-dialog-layout {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: 100%;
+  min-height: 0;
+}
+.lab-theme .lab-dialog-content {
+  scrollbar-gutter: stable;
+}
+@media (max-width: 480px), (max-height: 500px) {
+  .lab-theme .lab-dialog {
+    width: min(600px, calc(100vw - 16px));
+    height: calc(100dvh - 16px);
+    max-height: calc(100dvh - 16px);
+  }
+  .lab-theme .lab-dialog-layout > div { padding-inline: 16px; }
+}
+@media (max-height: 500px) {
+  .lab-theme .lab-dialog-layout > div:first-child { padding-block: 10px; }
+  .lab-theme .lab-dialog-layout > div:last-child { padding-block: 8px; }
+  .lab-theme .lab-dialog #descripcion-prueba { display: none; }
+}
 .lab-theme .lab-dialog::backdrop { background: rgba(8, 20, 36, .55); }
 .lab-theme .lab-dialog[open] { animation: lab-pop 180ms ease; }
+.lab-theme .lab-detail summary { transition: background-color 150ms ease; }
+.lab-theme .lab-detail summary:hover,
+.lab-theme .lab-detail[open] summary { background: var(--area-soft); }
+.lab-theme .lab-detail summary:focus-visible { outline-offset: -4px; }
 html:has(.lab-theme .lab-dialog[open]), body:has(.lab-theme .lab-dialog[open]) { overflow: hidden; }
 @keyframes lab-pop {
   from { opacity: 0; transform: translateY(8px) scale(.98); }

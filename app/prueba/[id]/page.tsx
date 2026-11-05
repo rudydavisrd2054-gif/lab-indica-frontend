@@ -60,11 +60,17 @@ export default function PruebaDetalle() {
           </p>
         </div>
 
-        <div className="space-y-4">
-          <h2 className="font-semibold text-gray-700">📋 Indicaciones:</h2>
-          <p className="text-gray-700 whitespace-pre-line leading-relaxed">
-            {prueba.indicaciones}
-          </p>
+        <div className="space-y-5">
+          {[
+            ["¿Qué es?", prueba.descripcion],
+            ["Preparación para el examen", prueba.preparacion],
+            ["Tipo de muestra", prueba.tipo_muestra],
+            ["Condiciones preanalíticas", prueba.indicaciones],
+            ["¿Cómo interpretar los resultados?", prueba.interpretacion],
+          ].map(([titulo, contenido]) => <section key={titulo}>
+            <h2 className="font-semibold text-gray-700">{titulo}</h2>
+            <p className="text-gray-700 whitespace-pre-line leading-relaxed wrap-anywhere">{contenido?.trim() || "Información aún no registrada. Consulta en el laboratorio."}</p>
+          </section>)}
         </div>
 
         <div className="mt-8 pt-4 border-t text-sm text-gray-500">

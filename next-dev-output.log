@@ -1,0 +1,14 @@
+▲ Next.js 16.4.5 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.60.7:3000
+✓ Ready in 1375ms
+✓ Running next.config.ts took 142ms
+Creating turbopack project {
+  dir: 'C:\\Users\\EDERY\\Lab-indicaciones\\lab-indica-frontend',
+  testMode: true
+}
+- Cache Components enabled
+- Partial Prefetching enabled
+
+ GET / 200 in 936ms (next.js: 507ms, application-code: 429ms)
+ GET / 200 in 81ms (next.js: 3ms, application-code: 77ms)
