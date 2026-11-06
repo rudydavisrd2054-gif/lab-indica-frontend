@@ -60,7 +60,7 @@ export default function ListaPruebas({ pruebas, consulta }: { pruebas: Prueba[];
               <button type="button" aria-haspopup="dialog" onClick={() => setSeleccion({ area, item })} className="lab-test flex w-full cursor-pointer items-center gap-2.5 rounded-[10px] px-1.5 py-2.5 text-left font-medium">
                 <span aria-hidden="true" className="size-2 shrink-0 rounded-full bg-[var(--area-color)]" />
                 <span className="lab-test-name min-w-0 flex-1 [overflow-wrap:anywhere]">
-                  {item.nombre}
+                  {item.nombre.toLocaleUpperCase("es")}
                   <EstadoPrueba prueba={item.prueba} />
                   {item.detalle && <small className="block text-[13px] font-normal text-lab-muted">{item.detalle}</small>}
                   {item.prueba?.tiempo_ayunas?.trim() && <small className="block font-lab-mono text-xs font-medium text-[var(--area-color)]">Ayuno: {item.prueba.tiempo_ayunas}</small>}
@@ -85,7 +85,7 @@ export default function ListaPruebas({ pruebas, consulta }: { pruebas: Prueba[];
           <div className="min-w-0 [overflow-wrap:anywhere]">
             <p className="mb-1 text-xs font-semibold tracking-[.1em] text-[var(--area-color)] uppercase">{seleccion?.area.nombre}</p>
             <EstadoPrueba prueba={registro} />
-            <h2 id="titulo-prueba" className="font-lab-display text-[clamp(22px,5vw,28px)] leading-[1.12] font-extrabold">{seleccion?.item.nombre ?? "Indicaciones de la prueba"}</h2>
+            <h2 id="titulo-prueba" className="font-lab-display text-[clamp(22px,5vw,28px)] leading-[1.12] font-extrabold">{seleccion?.item.nombre.toLocaleUpperCase("es") ?? "Indicaciones de la prueba"}</h2>
             {seleccion?.item.detalle && <p className="mt-0.5 text-[15px] text-lab-muted">{seleccion.item.detalle}</p>}
             <p id="descripcion-prueba" className="mt-2 text-sm text-lab-muted">Consulta cada sección para conocer los detalles del examen.</p>
           </div>

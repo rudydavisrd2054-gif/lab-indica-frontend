@@ -1,4 +1,4 @@
-﻿import type { Prueba } from "@/types/prueba";
+import type { Prueba } from "@/types/prueba";
 
 export const LAB = {
   establecimiento: "Centro de Salud Acapulco",
@@ -113,7 +113,7 @@ export function construirAreas(pruebas: Prueba[]): AreaCatalogo[] {
     areas.push({ id: "otras", nombre: "Otras pruebas", color: "5", items: otras });
     if (process.env.NODE_ENV !== "production") console.warn("Pruebas sin catálogo (Otras pruebas):", otras.map((item) => item.nombre));
   }
-  return areas.map((area) => ({ ...area, items: area.items.filter((item) => item.prueba) }))
+  return areas.map((area) => ({ ...area, items: area.items.filter((item) => item.prueba).sort((a, b) => a.nombre.localeCompare(b.nombre, "es", { sensitivity: "base", numeric: true })) }))
     .filter((area) => area.items.length > 0);
 }
 
