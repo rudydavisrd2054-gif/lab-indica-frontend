@@ -55,7 +55,8 @@ export default function ListaPruebas({ pruebas, consulta }: { pruebas: Prueba[];
               <span className="text-xs text-lab-muted">{area.items.length} {area.items.length === 1 ? "prueba" : "pruebas"}</span>
             </div>
           </div>
-          <ul className="flex flex-col">
+           {/* CÓDIGO MODIFICADO */}
+          <ul className="flex flex-col max-h-[260px] overflow-y-auto pr-1 custom-scrollbar">
             {area.items.map((item) => <li key={item.clave} className="border-b border-dashed border-lab-line last:border-0">
               <button type="button" aria-haspopup="dialog" onClick={() => setSeleccion({ area, item })} className="lab-test flex w-full cursor-pointer items-center gap-2.5 rounded-[10px] px-1.5 py-2.5 text-left font-medium">
                 <span aria-hidden="true" className="size-2 shrink-0 rounded-full bg-[var(--area-color)]" />
