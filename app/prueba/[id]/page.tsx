@@ -1,7 +1,6 @@
 "use client";
-export const dynamic = "force-dynamic";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 
 import type { Prueba } from "@/types/prueba";
@@ -9,6 +8,14 @@ import EstadoPrueba from "@/components/EstadoPrueba";
 import { API_URL } from "@/lib/api";
 
 export default function PruebaDetalle() {
+  return (
+    <Suspense fallback={<div className="p-6 text-center">Cargando...</div>}>
+      <PruebaDetalleContenido />
+    </Suspense>
+  );
+}
+
+function PruebaDetalleContenido() {
   const params = useParams();
   const id = params?.id as string;
   const [prueba, setPrueba] = useState<Prueba | null>(null);
