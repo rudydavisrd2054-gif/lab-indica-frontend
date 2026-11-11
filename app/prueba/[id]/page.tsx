@@ -43,8 +43,8 @@ export default function PruebaDetalle() {
   if (!prueba)
     return <div className="p-6 text-center">Prueba no encontrada</div>;
 
-  const enlaceCompartir =
-    typeof window !== "undefined" ? window.location.href : "";
+ const enlaceCompartir =
+   typeof window !== "undefined" ? window.location.href : "";
 
   return (
     <div className="min-h-screen bg-sky-50 p-4 md:p-8">
