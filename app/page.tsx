@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import logoAdark from "@/public/logo-adark.jpg";
 import { Globe, Camera, Play, MapPin, Phone, Clock } from "lucide-react";
 import ListaPruebas from "@/components/ListaPruebas";
 import PanelHorarios from "@/components/PanelHorarios";
@@ -55,16 +56,28 @@ export default function PaginaPrincipal() {
     <div className="lab-theme min-h-screen w-full bg-lab-bg pb-8 text-lab-fg">
       <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-7 px-[clamp(16px,4vw,56px)]">
         <header className="flex flex-wrap items-center justify-between gap-3 border-b border-lab-line py-4">
-          <div className="flex min-w-0 items-center gap-3">
-            <div className="shrink-0 rounded-xl bg-lab-bg p-2">
-              <Image src="/logocallao.png" width={4806} height={2801} priority alt="Gobierno Regional del Callao" sizes="83px" className="h-12 w-auto object-contain" />
+          <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+            <div className="relative h-[70px] w-[140px] shrink-0 overflow-hidden mix-blend-multiply min-[400px]:w-[180px] sm:h-[100px] sm:w-[260px]">
+              <Image
+                src={logoAdark}
+                alt="ADARK Solutions"
+                sizes="(max-width: 399px) 185px, (max-width: 640px) 238px, 343px"
+                className="absolute top-1/2 left-1/2 h-auto w-[132%] max-w-none -translate-x-1/2 -translate-y-1/2"
+              />
+            </div>
+            <p className="max-w-[190px] border-l border-lab-line py-1 pl-3 font-lab-display text-[13px] leading-snug font-medium tracking-[-0.015em] text-balance text-lab-muted sm:pl-3.5 sm:text-[15px]">
+              Soluciones digitales para impulsar tu negocio.
+            </p>
+          </div>
+          <div className="ml-auto flex min-w-0 items-center gap-3">
+            <div className="shrink-0 rounded-xl bg-lab-bg">
+              <Image src="/logocallao.png" width={4806} height={2801} priority alt="Gobierno Regional del Callao" sizes="(max-width: 640px) 110px, 138px" className="h-16 w-auto object-contain sm:h-20" />
             </div>
             <div className="min-w-0">
               <b className="block font-lab-display text-[17px] leading-[1.1] font-extrabold tracking-[.01em]">{LAB.establecimiento}</b>
               <span className="text-xs tracking-[.08em] text-lab-muted uppercase">{LAB.nombre}</span>
             </div>
           </div>
-          <a href={telefonoHref} className="rounded-full border-[1.5px] border-lab-brand px-3.5 py-[9px] font-lab-mono text-sm font-semibold whitespace-nowrap text-lab-brand">{LAB.telefono}</a>
         </header>
 
         <main className="flex flex-col gap-7">
