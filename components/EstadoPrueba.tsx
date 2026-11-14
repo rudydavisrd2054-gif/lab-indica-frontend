@@ -4,8 +4,8 @@ export default function EstadoPrueba({ prueba }: { prueba?: Prueba }) {
   if (!prueba?.estado) return null;
   const estados = {
     DISPONIBLE: { texto: "Disponible", clase: "border-green-200 bg-green-50 text-green-800" },
-    SIN_REACTIVO: { texto: "Sin reactivo", clase: "border-amber-200 bg-amber-50 text-amber-900" },
-    SUSPENDIDA: { texto: "Suspendida", clase: "border-slate-300 bg-slate-100 text-slate-800" },
+    SIN_REACTIVO: { texto: "Sin reactivo", clase: "border-slate-300 bg-slate-100 text-slate-700" },
+    SUSPENDIDA: { texto: "Suspendida", clase: "border-red-200 bg-red-50 text-red-800" },
   };
   const estado = estados[prueba.estado];
   if (!estado) return null;

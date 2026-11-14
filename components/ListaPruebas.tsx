@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import EstadoPrueba from "@/components/EstadoPrueba";
 import { BookOpen, ChevronDown, ChevronRight, ClipboardList, Info, TestTube, Droplet, FlaskConical, ListFilter, Microscope, ShieldCheck, X } from "lucide-react";
@@ -8,6 +8,19 @@ import { construirAreas, filtrarAreas, type AreaCatalogo, type PruebaCatalogo } 
 import type { Prueba } from "@/types/prueba";
 
 const ICONOS = { bioquimica: FlaskConical, inmunologia: ShieldCheck, hematologia: Droplet, microbiologia: Microscope, otras: ListFilter };
+
+const ESTILOS_ESTADO: Partial<Record<NonNullable<Prueba["estado"]>, CSSProperties>> = {
+  SIN_REACTIVO: {
+    backgroundColor: "#f1f5f9", color: "#334155",
+    boxShadow: "inset 3px 0 0 #94a3b8",
+    "--area-color": "#64748b", "--area-soft": "#e2e8f0",
+  } as CSSProperties,
+  SUSPENDIDA: {
+    backgroundColor: "#fff1f2", color: "#991b1b",
+    boxShadow: "inset 3px 0 0 #ef4444",
+    "--area-color": "#dc2626", "--area-soft": "#ffe4e6",
+  } as CSSProperties,
+};
 
 interface Seleccion {
   area: AreaCatalogo;
@@ -58,7 +71,7 @@ export default function ListaPruebas({ pruebas, consulta }: { pruebas: Prueba[];
            {/* CÓDIGO MODIFICADO */}
           <ul className="flex flex-col max-h-[260px] overflow-y-auto pr-1 custom-scrollbar">
             {area.items.map((item) => <li key={item.clave} className="border-b border-dashed border-lab-line last:border-0">
-              <button type="button" aria-haspopup="dialog" onClick={() => setSeleccion({ area, item })} className="lab-test flex w-full cursor-pointer items-center gap-2.5 rounded-[10px] px-1.5 py-2.5 text-left font-medium">
+              <button type="button" aria-haspopup="dialog" onClick={() => setSeleccion({ area, item })} style={item.prueba?.estado ? ESTILOS_ESTADO[item.prueba.estado] : undefined} className="lab-test flex w-full cursor-pointer items-center gap-2.5 rounded-[10px] px-1.5 py-2.5 text-left font-medium transition-colors duration-200 motion-reduce:transition-none">
                 <span aria-hidden="true" className="size-2 shrink-0 rounded-full bg-[var(--area-color)]" />
                 <span className="lab-test-name min-w-0 flex-1 [overflow-wrap:anywhere]">
                   {item.nombre.toLocaleUpperCase("es")}

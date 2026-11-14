@@ -1,6 +1,7 @@
 import type { Prueba } from "@/types/prueba";
 
-export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
+// El navegador consulta Next.js; el servidor reenvía la petición al backend.
+export const API_URL = "";
 
 export async function getPruebas(signal?: AbortSignal): Promise<Prueba[]> {
   try {

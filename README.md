@@ -2,6 +2,14 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+### Conexión con la API
+
+Copia `.env.local.example` a `.env.local` y configura `API_URL` con la URL del backend (localmente, `http://localhost:5000`). Mantén el backend encendido y reinicia Next.js después de cambiar esta configuración. En producción, configura la URL de un backend que tenga acceso a la base de datos antes de generar el build.
+
+El navegador consulta `/api/pruebas` en el frontend y Next.js reenvía las peticiones al backend, tanto para la lista como para el detalle. Así, al acceder desde un celular, `localhost:5000` se resuelve en el servidor de Next.js. No es necesario exponer la base de datos ni configurar CORS para cada dispositivo.
+
+Si la API responde HTTP 500, revisa los registros del backend y su configuración de base de datos; cambiar la URL del frontend no corrige un error interno de la API.
+
 First, run the development server:
 
 ```bash
