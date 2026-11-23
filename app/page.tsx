@@ -153,8 +153,19 @@ export default function PaginaPrincipal() {
             </section>
           </div>
 
-          <div className="mt-8 border-t border-lab-line pt-5 text-center text-sm leading-6 text-lab-muted">
+          <div className="mt-8 flex flex-col gap-2 border-t border-lab-line pt-5 text-sm leading-6 text-lab-muted sm:flex-row sm:items-center sm:justify-between sm:gap-4">
             <p>© 2026 Laboratorio Clínico Acapulco. Todos los derechos reservados.</p>
+            <p className="flex shrink-0 items-center gap-2 self-end sm:self-auto">
+              <span>Desarrollado por</span>
+              <span className="relative h-7 w-28 shrink-0 overflow-hidden mix-blend-multiply">
+                <Image
+                  src={logoAdark}
+                  alt="ADARK Solutions"
+                  sizes="144px"
+                  className="absolute top-1/2 left-1/2 h-auto w-36 max-w-none -translate-x-1/2 -translate-y-1/2"
+                />
+              </span>
+            </p>
           </div>
         </footer>
       </div>
