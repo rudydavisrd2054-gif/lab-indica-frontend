@@ -6,6 +6,7 @@ import logoAdark from "@/public/logo-adark.jpg";
 import { Globe, Camera, Play, MapPin, Phone, Clock } from "lucide-react";
 import ListaPruebas from "@/components/ListaPruebas";
 import PanelHorarios from "@/components/PanelHorarios";
+import CodigoQrGeneral from "@/components/CodigoQrGeneral";
 import { LAB } from "@/lib/laboratorio";
 import { getPruebas } from "@/lib/api";
 import type { Prueba } from "@/types/prueba";
@@ -114,11 +115,12 @@ export default function PaginaPrincipal() {
 
         <footer className="mt-3 rounded-[24px] border border-lab-line bg-lab-surface px-5 pt-8 pb-5 text-[15px] min-[640px]:px-8">
           <div className="grid grid-cols-1 gap-8 min-[640px]:grid-cols-2 min-[1280px]:grid-cols-[1.2fr_1fr_1.2fr_1fr]">
-            <div className="flex flex-col items-start gap-4">
+            <div className="flex flex-col items-start gap-4 min-[1280px]:gap-2">
               <Image src="/logocallao.png" width={4806} height={2801} alt="Gobierno Regional del Callao" sizes="110px" className="h-16 w-auto object-contain" />
               <div>
                 <p className="font-lab-display text-xl font-extrabold text-lab-brand">Laboratorio Acapulco</p>
                 <p className="mt-1 text-sm text-lab-muted">{LAB.establecimiento}</p>
+                <CodigoQrGeneral />
               </div>
             </div>
 
